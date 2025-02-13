@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validation</title>
+  
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: rgb(83, 74, 88);
+      color: rgb(0, 0, 0);
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4 text-center text-primary">Registration Form</h2>
+    <form id="registrationForm" novalidate>
+      
+      <div class="form-group">
+        <div class="row g-3">
+            <div class="col">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" required>
+                <div class="error" id="firstNameError"></div>
+            </div>
+            <div class="col">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" required>
+                <div class="error" id="lastNameError"></div>
+
+            </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="userName">User Name</label>
+        <input type="text" class="form-control" id="userName" name="userName" required>
+        <div class="error" id="userNameError"></div>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+        <div class="error" id="passwordError"></div>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+        <div class="error" id="emailError"></div>
+      </div>
+      
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" class="form-control" id="phone" name="phone" required>
+        <div class="error" id="phoneError"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Gender</label>
+        <div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="gender" id="male" value="male" checked>
+            <label class="form-check-label" for="male">Male</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+            <label class="form-check-label" for="female">Female</label>
+          </div>
+        </div>
+        <div class="error" id="genderError"></div>
+      </div>
+     
+      <div class="form-group">
+        <div class="row g-3">
+            
+            <div class="col">
+                <label for="state">State</label>
+                <input type="text" class="form-control" id="state" name="state"  required>
+                <div class="error" id="stateError"></div>
+            </div>
+            <div class="col">
+                <label for="dob">Date of Birth</label>
+                <input type="date" class="form-control" id="dob" name="dob"  required>
+                <div class="error" id="dobError"></div>
+            </div>
+        </div>
+        
+        
+        
+            <label for="state">City</label>
+            <input type="text" class="form-control" id="city" name="city"  required>
+            <div class="error" id="cityError"></div> 
+        </div>
+      
+      
+      <div class="form-group">
+        <label for="address">Address</label>
+        <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+        <div class="error" id="addressError"></div>
+      </div>
+      
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="agree" name="agree" required>
+        <label class="form-check-label" for="agree">I agree to the terms and conditions</label>
+        <div class="error" id="agreeError"></div>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+ 
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function (event) {
+          event.preventDefault();
+          let isValid = true;
+    
+          // Clear previous error messages
+          document.querySelectorAll('.error').forEach(function (el) {
+            el.textContent = '';
+          });
+    
+          // First Name Validation
+          const firstName = document.getElementById('firstName').value.trim();
+          if (!firstName || !/^[A-Za-z]+$/.test(firstName)) {
+            document.getElementById('firstNameError').textContent = 'First Name is required and should contain only letters.';
+            isValid = false;
+          }
+    
+          // Last Name Validation
+          const lastName = document.getElementById('lastName').value.trim();
+          if (!lastName || !/^[A-Za-z]+$/.test(lastName)) {
+            document.getElementById('lastNameError').textContent = 'Last Name is required and should contain only letters.';
+            isValid = false;
+          }
+    
+          // User Name Validation
+          const userName = document.getElementById('userName').value.trim();
+          if (!userName) {
+            document.getElementById('userNameError').textContent = 'User Name is required.';
+            isValid = false;
+          }
+    
+          // Password Validation
+          const password = document.getElementById('password').value.trim();
+          if (!password) {
+            document.getElementById('passwordError').textContent = 'Password is required.';
+            isValid = false;
+          }
+    
+          // Email Validation
+          const email = document.getElementById('email').value.trim();
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!email || !emailPattern.test(email)) {
+            document.getElementById('emailError').textContent = 'Valid Email is required.';
+            isValid = false;
+          }
+    
+          // Phone Number Validation
+          const phone = document.getElementById('phone').value.trim();
+          if (!phone || !/^\d{10}$/.test(phone)) {
+            document.getElementById('phoneError').textContent = 'Phone Number is required and should be 10 digits.';
+            isValid = false;
+          }
+    
+          // Gender Validation
+          const gender = document.querySelector('input[name="gender"]:checked');
+          if (!gender) {
+            document.getElementById('genderError').textContent = 'Gender is required.';
+            isValid = false;
+          }
+    
+          // City Validation
+          const city = document.getElementById('city').value.trim();
+          if (!city) {
+            document.getElementById('cityError').textContent = 'City is required.';
+            isValid = false;
+          }
+    
+          // State Validation
+          const state = document.getElementById('state').value.trim();
+          if (!state) {
+            document.getElementById('stateError').textContent = 'State is required.';
+            isValid = false;
+          }
+    
+          // Date of Birth Validation
+          const dob = document.getElementById('dob').value.trim();
+          if (!dob) {
+            document.getElementById('dobError').textContent = 'Date of Birth is required.';
+            isValid = false;
+          }
+    
+          // Address Validation
+          const address = document.getElementById('address').value.trim();
+          if (!address) {
+            document.getElementById('addressError').textContent = 'Address is required.';
+            isValid = false;
+          }
+    
+          // Agree Terms Validation
+          const agree = document.getElementById('agree').checked;
+          if (!agree) {
+            document.getElementById('agreeError').textContent = 'You must agree to the terms and conditions.';
+            isValid = false;
+          }
+    
+          // If all validations pass, submit the form
+          if (isValid) {
+            alert('Form submitted successfully!');
+            // Uncomment the line below to submit the form programmatically
+            // this.submit();
+          }
+        });
+      </script>
+       
+    </body>
+  </div>
+
